@@ -2,9 +2,8 @@
 
 namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
-use App\Http\Resources\ImgeResource;
-use App\Http\Resources\DeleteHouseResource;
-
+use App\Http\Resources\CommntResource;
+use App\Models\LikesAndDislikes;
 
 class House extends JsonResource
 {
@@ -33,12 +32,13 @@ class House extends JsonResource
             'Pet_friendly'      => $this->Pet_friendly,
             'Kid_friendly'      => $this->Kid_friendly,
             'Pet_friendly'      => $this->Pet_friendly,
-            // 'approved'          => $this->approved,
             'rating'            => $this->rating,
             'user_id'           => $this->user->id,
+            'likes'=>count(LikesAndDislikes::where('house_id',$this->id)->where('likeState',1)->get()),
+            'dislikes'=>count(LikesAndDislikes::where('house_id',$this->id)->where('likeState',0)->get()),
+            'imeges'            => $this->imeges,
+            'comments'          => CommntResource::collection( $this->comments),
             // 'imeges'               =>ImgeResource::collection( $this->imeges),
-            'imeges'               => $this->imeges,
-            'comments'          =>  $this->comments,
         ];
     }
 }

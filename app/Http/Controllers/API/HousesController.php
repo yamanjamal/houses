@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\House;
+use App\Models\User;
+use App\Models\LikesAndDislikes;
 use App\Models\Imge;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,8 +26,10 @@ class HousesController extends Controller
      */
     public function index(BaseService $baseservice)
     {   
+        // dd(count(LikesAndDislikes::where('house_id',1)->where('likeState',1)->get()));
         // ['approver','inprogress','declined']
-        $houses =House::with(['imeges','user'])->where('approved',0)->get();
+
+        $houses =House::with(['imeges','user','comments','LikesAndDislikes'])->where('approved',0)->get();
         return $baseservice->sendResponse(HouseResource::collection($houses),'houses sent sussesfully');
     }
 

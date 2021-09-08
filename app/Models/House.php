@@ -44,6 +44,11 @@ class House extends Model
         return $this->hasMany(Comment::class);
         
     }
+    public function LikesAndDislikes(){
+
+        return $this->hasMany(LikesAndDislikes::class);
+        
+    }
 }
 
 

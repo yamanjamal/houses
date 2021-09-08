@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\User;
 
 class CommntResource extends JsonResource
 {
@@ -15,10 +16,12 @@ class CommntResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=>$this->id,
+            // 'id'=>$this->id,
+            'username'=>$this->user->name,
             'content'=>$this->content,
             'user_id'=>$this->user->id,
-            'house_id'=>$this->house->id,
+            // 'house_id'=>$this->house->id,
+            // 'username'=>$username->name,
         ];
     }
 }

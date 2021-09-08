@@ -5,20 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Imge extends Model
+class LikesAndDislikes extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
-        'src',
+        'likeState',
+        'user_id',
         'house_id',
     ];
-    protected $visible = ['src'];
+    protected $visible = ['likeState','user_id'];
 
-
-    public function house(){
-
-        return $this->belongsTo(House::class);
-
-    }
 }

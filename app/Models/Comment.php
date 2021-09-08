@@ -15,7 +15,7 @@ class Comment extends Model
         'user_id',
         'house_id',
     ];
-
+    protected $visible = ['content','user_id'];
 
     public function user(){
 

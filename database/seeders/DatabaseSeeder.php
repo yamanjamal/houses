@@ -3,9 +3,9 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\House;
-use App\Models\Imge;
-use App\Models\Comment;
+// use App\Models\House;
+// use App\Models\Imge;
+// use App\Models\Comment;
 
 
 
@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
             AdminSeeder::class,
             HouseSeeder::class,
             CommentSeeder::class,
+            LikesAndDislikesSeeder::class,
             ImgeSeeder::class,
         ]);
 

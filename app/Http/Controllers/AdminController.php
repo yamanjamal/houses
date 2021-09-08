@@ -17,7 +17,8 @@ class AdminController extends Controller
         if (Auth::guard('admin')->attempt($cred)) {
             return redirect()->route('admin.home')->with(['success' => 'admin loggedin seccessfuly']);
         }else{
-            return redirect()->route('admin.login')->with(['ERORR' => 'the info is not correct']);
+            return 
+            redirect()->route('admin.login')->with(['ERORR' => 'the info is not correct']);
         }
     }
 

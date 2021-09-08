@@ -5,6 +5,8 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\CommntResource;
 use App\Http\Resources\ImgeResource;
+use App\Models\LikesAndDislikes;
+
 
 class HouseShowResource extends JsonResource
 {
@@ -33,11 +35,15 @@ class HouseShowResource extends JsonResource
             'Pet_friendly'      => $this->Pet_friendly,
             'Kid_friendly'      => $this->Kid_friendly,
             'Pet_friendly'      => $this->Pet_friendly,
-            'approved'          => $this->approved,
             'rating'            => $this->rating,
             'user_id'           => $this->user->id,
-            'imeges'            =>ImgeResource::collection( $this->imeges),
+            'likes'=>count(LikesAndDislikes::where('house_id',$this->id)->where('likeState',1)->get()),
+            'dislikes'=>count(LikesAndDislikes::where('house_id',$this->id)->where('likeState',0)->get()),            
+            'imeges'            =>$this->imeges,
             'comments'          => CommntResource::collection( $this->comments),
+            // 'comments'          => $this->comments,
+            // 'approved'          => $this->approved,
+            // 'imeges'            =>ImgeResource::collection( $this->imeges),
         ];    
     }
 }
