@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\HousesController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LikesAndDislikesController;
 use App\Http\Controllers\ImgeController;
 
 /*
@@ -57,6 +58,15 @@ Route::prefix('comment')->name('comment.')->middleware('auth:sanctum')->group(fu
     Route::delete('/destroy/{id}',[CommentController::class,'destroy']); 
 });
 // ++++++++++++++++++++++++++++++++++++end comments api+++++++++++++++++++++++++++++++++++
+
+// ++++++++++++++++++++++++++++++++++++start likes api+++++++++++++++++++++++++++++++++++
+
+Route::prefix('like')->name('like.')->middleware('auth:sanctum')->group(function(){
+    Route::post('/store',         [LikesAndDislikesController::class,'store']);
+    Route::put('/update/{id}',    [LikesAndDislikesController::class,'update']); 
+    Route::delete('/destroy/{id}',[LikesAndDislikesController::class,'destroy']); 
+});
+// ++++++++++++++++++++++++++++++++++++end likes api+++++++++++++++++++++++++++++++++++
 
 // Route::prefix('imge')->name('imge.')->middleware('auth:sanctum')->group(function(){
     // Route::get   ('/index',       [ImgeController::class,'index']);

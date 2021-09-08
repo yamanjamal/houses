@@ -83,7 +83,6 @@ class HousesController extends Controller
                 'house_id'=>$house->id,
             ]);
         // +++++++++++++++++++img++++++++++++++++++++
-        
         return $baseservice->sendResponse(new HouseResource($house),'created successfully');
     }
 

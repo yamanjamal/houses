@@ -66,7 +66,7 @@ class CommentController extends Controller
         $comment= Comment::with(['user','house'])->find($id);
         if($comment){
             $comment->update($request->validated());
-            return $baseservice->sendResponse(new CommntResource($comment),'got comment successfully');
+            return $baseservice->sendResponse(new CommntResource($comment),'updated comment successfully');
         }
         return $baseservice->sendError('comment id not found');
     }

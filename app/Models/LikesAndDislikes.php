@@ -15,6 +15,16 @@ class LikesAndDislikes extends Model
         'user_id',
         'house_id',
     ];
-    protected $visible = ['likeState','user_id'];
+    protected $visible = ['likeState','user_id','house_id'];
 
+    public function user(){
+
+        return $this->belongsTo(User::class);
+
+    }
+    public function house(){
+
+        return $this->belongsTo(House::class);
+
+    }
 }
