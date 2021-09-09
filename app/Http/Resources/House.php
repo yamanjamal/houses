@@ -16,7 +16,9 @@ class House extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'                => $this->id,
+            'ownerid'           => $this->user->id,
+            'ownername'         => $this->user->name,
+            'houseid'           => $this->id,
             'title'             => $this->title,
             'beds'              => $this->beds,
             'baths'             => $this->baths,
@@ -33,7 +35,6 @@ class House extends JsonResource
             'Kid_friendly'      => $this->Kid_friendly,
             'Pet_friendly'      => $this->Pet_friendly,
             'rating'            => $this->rating,
-            'user_id'           => $this->user->id,
             'likes'=>count(LikesAndDislikes::where('house_id',$this->id)->where('likeState',1)->get()),
             'dislikes'=>count(LikesAndDislikes::where('house_id',$this->id)->where('likeState',0)->get()),
             'imeges'            => $this->imeges,

@@ -19,7 +19,9 @@ class HouseShowResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'                => $this->id,
+            'ownerid'           => $this->user->id,
+            'ownername'         => $this->user->name,
+            'houseid'           => $this->id,
             'title'             => $this->title,
             'beds'              => $this->beds,
             'baths'             => $this->baths,

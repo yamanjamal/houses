@@ -10,7 +10,6 @@ use App\Http\Resources\CommntResource;
 use App\Http\Requests\CommentStoreRequest;
 use App\Http\Requests\CommentUpdateRequest;
 
-
 class CommentController extends Controller
 {
     /**
@@ -63,12 +62,12 @@ class CommentController extends Controller
      */
     public function update(CommentUpdateRequest $request,$id ,BaseService $baseservice)
     {
-        $comment= Comment::with(['user','house'])->find($id);
+        $comment= Comment::with(['user','house'])->where('user_id',Auth::user()->id)->find($id);
         if($comment){
             $comment->update($request->validated());
             return $baseservice->sendResponse(new CommntResource($comment),'updated comment successfully');
         }
-        return $baseservice->sendError('comment id not found');
+        return $baseservice->sendError('you didnt write this comment (id not found)');
     }
 
     /**
@@ -79,11 +78,11 @@ class CommentController extends Controller
      */
     public function destroy($id,BaseService $baseservice)
     {
-        $comment= Comment::with(['user','house'])->find($id);
+        $comment= Comment::with(['user','house'])->where('user_id',Auth::user()->id)->find($id);
         if($comment){
              $comment->delete();
             return $baseservice->sendResponse(new CommntResource($comment),' comment deleted successfully');
         }
-        return $baseservice->sendError('comment id not found');
+        return $baseservice->sendError('you didnt write this comment (id not found)');
     }
 }

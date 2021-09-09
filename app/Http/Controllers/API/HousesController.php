@@ -95,7 +95,7 @@ class HousesController extends Controller
      */
     public function update(HouseUpdateRequest $request, $id,BaseService $baseservice)
     {
-        $house= House::with(['imeges','comments','user'])->find($id);
+        $house= House::with(['imeges','comments','user'])->where('user_id',Auth::user()->id)->find($id);
         if($house){
             $house->update([
                 // $request->validated()
@@ -116,7 +116,7 @@ class HousesController extends Controller
             ]);
         // +++++++++++++++++++img++++++++++++++++++++
 
-            $imge =Imge::with('house')->where('house_id',$house->id);
+            $imge =Imge::with('house')->where('house_id',$house->id)->get();
             if($imge){
                 $photo=$request->src;
                 $newphoto=time().$photo->getClientOriginalName();
