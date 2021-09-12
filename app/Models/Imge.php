@@ -12,8 +12,9 @@ class Imge extends Model
     protected $fillable = [
         'src',
         'house_id',
+        'user_id',
     ];
-    protected $visible = ['src'];
+    protected $visible = ['id','src'];
 
 
     public function house(){

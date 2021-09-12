@@ -15,7 +15,7 @@ class ImgeResource extends JsonResource
     public function toArray($request)
     {
           return [
-            'id'      =>$this->id,
+            'img_id'      =>$this->id,
             'src'     =>$this->src,
             'house_id'=>$this->house->id,
             // 'house_id'   =>DeleteHouseResource::$this->house,

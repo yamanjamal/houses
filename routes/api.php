@@ -68,11 +68,11 @@ Route::prefix('like')->name('like.')->middleware('auth:sanctum')->group(function
 });
 // ++++++++++++++++++++++++++++++++++++end likes api+++++++++++++++++++++++++++++++++++
 
-// Route::prefix('imge')->name('imge.')->middleware('auth:sanctum')->group(function(){
+Route::prefix('image')->name('image.')->middleware('auth:sanctum')->group(function(){
     // Route::get   ('/index',       [ImgeController::class,'index']);
     // Route::get   ('/show/{id}',   [ImgeController::class,'show']);
-    // Route::post  ('/store',       [ImgeController::class,'store']);
+    Route::post  ('/store',       [ImgeController::class,'store']);
     // Route::put   ('/update/{id}', [ImgeController::class,'update']); 
-    // Route::delete('/destroy/{id}',[ImgeController::class,'destroy']); 
-// });
+    Route::delete('/destroy/{id}',[ImgeController::class,'destroy']); 
+});
 

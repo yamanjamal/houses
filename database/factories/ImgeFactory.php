@@ -24,6 +24,7 @@ class ImgeFactory extends Factory
         return [
             'src' => $this->faker->Image,
             'house_id' => rand(1,10),
+            'user_id'       =>rand(1,10),
         ];
     }
 }

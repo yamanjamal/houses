@@ -3,35 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Imge;
+use App\Models\House;
 use Illuminate\Http\Request;
 use App\Services\BaseService;
 use App\Http\Resources\ImgeResource;
 use App\Http\Requests\ImgeRequest;
+use App\Http\Requests\DeleteImageRequest;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ImgeUpdateRequest;
 
 class ImgeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index(BaseService $baseservice)
-    {
-        $imge =Imge::with('house')->get();
-        return $baseservice->sendResponse(ImgeResource::collection($imge) ,'all imges sent sussesfully');    
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -40,52 +22,21 @@ class ImgeController extends Controller
      */
     public function store(ImgeRequest $request,BaseService $baseservice)
     {
-        $imge =Imge::with('house')->create([
-            'src'=>$request->src,
-            'house_id'=>$request->house_id,
-        ]);
-        return $baseservice->sendResponse(new ImgeResource($imge),'created successfully');
-    }
+        $house= House::with(['imeges','comments','user'])->where('id',$request->house_id)->where('user_id',Auth::user()->id)->first();
+        if($house){
+            $file=$request->file('src');
+            $extension=$file->getClientOriginalExtension();
+            $filename=time().'.'.$extension;
+            $file->move('uploads/houses/',$filename);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Imge  $imge
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id,BaseService $baseservice)
-    {
-        $imge =Imge::with('house')->find($id);
-         return $imge?$baseservice->sendResponse(new ImgeResource($imge),'got imge successfully')
-        :$baseservice->sendError('imge id not found');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Imge  $imge
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Imge $imge)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Imge  $imge
-     * @return \Illuminate\Http\Response
-     */
-    public function update(ImgeUpdateRequest $request,$id ,BaseService $baseservice)
-    {
-        $imge =Imge::with('house')->find($id);
-        if($imge){
-            $imge->update($request->validated());
-            return $baseservice->sendResponse(new ImgeResource($imge),'got imge successfully');
+            $imge =Imge::with('house')->create([
+                'src'=>$filename,
+                'house_id'=>$request->house_id,
+                'user_id'=>Auth::user()->id,
+            ]);
+            return $baseservice->sendResponse(new ImgeResource($imge),'created successfully');
         }
-        return $baseservice->sendError('imge id not found');
+        return $baseservice->sendError('you didnt post this house (id not found)');
     }
 
     /**
@@ -94,13 +45,19 @@ class ImgeController extends Controller
      * @param  \App\Models\Imge  $imge
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id,BaseService $baseservice)
+    public function destroy(DeleteImageRequest $request,$id,BaseService $baseservice)
     {
-        $imge =Imge::with('house')->find($id);
+        $imge =Imge::with('house')->where('user_id',Auth::user()->id)->find($id);
         if($imge){
-            $imge->delete();
-            return $baseservice->sendResponse(new ImgeResource($imge),' imge deleted successfully');
+            $house= House::withcount('imeges')->where('id',$request->house_id)
+            ->where('user_id',Auth::user()->id)->first();
+            if($house['imeges_count']>1){
+
+                $imge->delete();
+                return $baseservice->sendResponse(new ImgeResource($imge),' imge deleted successfully');
+            }
+            return $baseservice->sendError('the house cant have no images');
         }
-        return $baseservice->sendError('imge id not found');
+        return $baseservice->sendError('you didnt post this image (id not found)');
     }
 }

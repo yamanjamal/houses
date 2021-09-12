@@ -24,7 +24,7 @@ class ImgeRequest extends FormRequest
     public function rules()
     {
         return [
-            'src'=>'required|string|max:2000',
+            'src'=>'required|image|max:2000',
             'house_id'=>'required|exists:houses,id',
         ];
     }

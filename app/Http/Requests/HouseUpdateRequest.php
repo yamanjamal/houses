@@ -38,8 +38,7 @@ class HouseUpdateRequest extends FormRequest
             'Air_condtioning'=>'required|boolean',
             'Pet_friendly'   =>'required|boolean',
             'Kid_friendly'   =>'required|boolean',
-            'src'            =>'required|image|max:2000',
-
+            // 'src'            =>'required|string',
         ];
     }
 }

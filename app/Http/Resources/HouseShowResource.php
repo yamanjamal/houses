@@ -41,11 +41,11 @@ class HouseShowResource extends JsonResource
             'user_id'           => $this->user->id,
             'likes'=>count(LikesAndDislikes::where('house_id',$this->id)->where('likeState',1)->get()),
             'dislikes'=>count(LikesAndDislikes::where('house_id',$this->id)->where('likeState',0)->get()),            
-            'imeges'            =>$this->imeges,
+            'imeges'            =>ImgeResource::collection( $this->imeges),
             'comments'          => CommntResource::collection( $this->comments),
+            // 'imeges'            =>$this->imeges,
             // 'comments'          => $this->comments,
             // 'approved'          => $this->approved,
-            // 'imeges'            =>ImgeResource::collection( $this->imeges),
         ];    
     }
 }

@@ -37,9 +37,9 @@ class House extends JsonResource
             'rating'            => $this->rating,
             'likes'=>count(LikesAndDislikes::where('house_id',$this->id)->where('likeState',1)->get()),
             'dislikes'=>count(LikesAndDislikes::where('house_id',$this->id)->where('likeState',0)->get()),
-            'imeges'            => $this->imeges,
+            'imeges'               =>ImgeResource::collection( $this->imeges),
             'comments'          => CommntResource::collection( $this->comments),
-            // 'imeges'               =>ImgeResource::collection( $this->imeges),
+            // 'imeges'            => $this->imeges,
         ];
     }
 }

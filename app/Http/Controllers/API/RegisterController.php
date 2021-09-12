@@ -1,4 +1,4 @@
-    <?php
+<?php
 
 namespace App\Http\Controllers\API;
 
@@ -22,13 +22,13 @@ class RegisterController extends Controller
 
 
         // +++++++++++++++++++img++++++++++++++++++++
-        if ($input['img']) {
-            $photo=$request->img;
-            $newphoto=time().$photo->getClientOriginalName();
+        // if ($input['img']) {
+        //     $photo=$request->img;
+        //     $newphoto=time().$photo->getClientOriginalName();
 
-            $photo->move('uploads/houses/',$newphoto);
-            $input['img']='uploads/houses/'.$newphoto;
-        }
+        //     $photo->move('uploads/houses/',$newphoto);
+        //     $input['img']='uploads/houses/'.$newphoto;
+        // }
         // +++++++++++++++++++img++++++++++++++++++++
         
         $user=User::create($input);
