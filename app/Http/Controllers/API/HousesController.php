@@ -118,13 +118,13 @@ class HousesController extends Controller
                 'place'          =>$request->place,
                 'description'    =>$request->description,
                 'property_type'  =>$request->property_type,
-                'Balcony'        =>$request->Balcony,
-                'Parking'        =>$request->Parking,
-                'Pool'           =>$request->Pool,
-                'Beach'          =>$request->Beach,
-                'Air_condtioning'=>$request->Air_condtioning,
-                'Pet_friendly'   =>$request->Pet_friendly,
-                'Kid_friendly'   =>$request->Kid_friendly,
+                'Balcony'        =>$request->Balcony==true ? 'true' : null,
+                'Parking'        =>$request->Parking==true ? 'true' : null,
+                'Pool'           =>$request->Pool==true ? 'true' : null,
+                'Beach'          =>$request->Beach==true ? 'true' : null,
+                'Air_condtioning'=>$request->Air_condtioning==true ? 'true' : null,
+                'Pet_friendly'   =>$request->Pet_friendly==true ? 'true' : null,
+                'Kid_friendly'   =>$request->Kid_friendly==true ? 'true' : null,
             ]);
         // +++++++++++++++++++img++++++++++++++++++++
 
