@@ -107,6 +107,7 @@ class HousesController extends Controller
      */
     public function update(HouseUpdateRequest $request, $id,BaseService $baseservice)
     {
+        // dd($house->Pet_friendly);
         $house= House::with(['imeges','comments','user'])->where('user_id',Auth::user()->id)->find($id);
         if($house){
             $house->update([
@@ -118,13 +119,13 @@ class HousesController extends Controller
                 'place'          =>$request->place,
                 'description'    =>$request->description,
                 'property_type'  =>$request->property_type,
-                'Balcony'        =>$request->Balcony==true ? 'true' : null,
-                'Parking'        =>$request->Parking==true ? 'true' : null,
-                'Pool'           =>$request->Pool==true ? 'true' : null,
-                'Beach'          =>$request->Beach==true ? 'true' : null,
-                'Air_condtioning'=>$request->Air_condtioning==true ? 'true' : null,
-                'Pet_friendly'   =>$request->Pet_friendly==true ? 'true' : null,
-                'Kid_friendly'   =>$request->Kid_friendly==true ? 'true' : null,
+                'Balcony'        =>isset($request->Balcony) ? $request->Balcony : $house->Balcony,
+                'Parking'        =>isset($request->Parking)? $request->Parking : $house->Parking,
+                'Pool'           =>isset($request->Pool)? $request->Pool : $house->Pool,
+                'Beach'          =>isset($request->Beach) ? $request->Beach : $house->Beach,
+                'Air_condtioning'=>isset($request->Air_condtioning) ? $request->Air_condtioning : $house->Air_condtioning,
+                'Pet_friendly'   =>isset($request->Pet_friendly) ? $request->Pet_friendly : $house->Pet_friendly,
+                'Kid_friendly'   =>isset($request->Kid_friendly) ? $request->Kid_friendly : $house->Kid_friendly,
             ]);
         // +++++++++++++++++++img++++++++++++++++++++
 
