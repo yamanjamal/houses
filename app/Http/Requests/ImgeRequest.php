@@ -25,7 +25,6 @@ class ImgeRequest extends FormRequest
     {
         return [
             'src'=>'required|image|max:2000',
-            'house_id'=>'required|exists:houses,id',
         ];
     }
 }

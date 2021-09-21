@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Multitenantable;
 
 class House extends Model
 {
-    use HasFactory;
+    use HasFactory,Multitenantable;
 
     protected $fillable = [
         'title',
@@ -48,6 +49,27 @@ class House extends Model
 
         return $this->hasMany(LikesAndDislikes::class);
         
+    }
+
+    public function getPropertyTypeAttribute($value){
+        // ['house','vella','appartment']
+        if($value=='0'){
+            return 'house';
+        }elseif ($value=='1') {
+            return 'vella';
+        }elseif($value=='2'){
+            return 'appartment';
+        }
+    }
+    public function getapprovedAttribute($value){
+        // ['approver','inprogress','declined']
+        if($value=='0'){
+            return 'approver';
+        }elseif ($value=='1') {
+            return 'inprogress';
+        }elseif($value=='2'){
+            return 'declined';
+        }
     }
 }
 

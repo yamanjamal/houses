@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\HouseResource;
 
 class ImgeResource extends JsonResource
 {
@@ -15,11 +16,9 @@ class ImgeResource extends JsonResource
     public function toArray($request)
     {
           return [
-            'img_id'      =>$this->id,
+            'img_id'  =>$this->id,
             'src'     =>$this->src,
             'house_id'=>$this->house->id,
-            // 'house_id'   =>DeleteHouseResource::$this->house,
-
         ];
     }
 }

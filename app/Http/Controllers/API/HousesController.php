@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Services\BaseService;
-use App\Http\Resources\House as HouseResource;
+use App\Http\Resources\HouseResource;
 use App\Http\Resources\HouseShowResource;
 use App\Http\Resources\ImgeResource;
 use App\Http\Requests\HouseRequest;
@@ -85,8 +85,9 @@ class HousesController extends Controller
             // ++++++++++test+++++++++
         if($request->hasfile('src')){
             $file=$request->file('src');
+            $filefirstname=time().$file->getClientOriginalName();
             $extension=$file->getClientOriginalExtension();
-            $filename=time().'.'.$extension;
+            $filename=$filefirstname.time().'.'.$extension;
             $file->move('uploads/houses/',$filename);
             $imge =Imge::with('house')->create([
                 'src'=>$filename,

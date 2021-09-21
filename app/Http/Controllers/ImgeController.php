@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Imge;
-use App\Models\House;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
-use App\Services\BaseService;
 use App\Http\Resources\ImgeResource;
 use App\Http\Requests\ImgeRequest;
-use App\Http\Requests\DeleteImageRequest;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ImgeUpdateRequest;
+use App\Models\Imge;
+use App\Models\House;
 
-class ImgeController extends Controller
+class ImgeController extends ApiController
 {
     /**
      * Store a newly created resource in storage.
@@ -20,23 +17,23 @@ class ImgeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ImgeRequest $request,BaseService $baseservice)
+    public function store(ImgeRequest $request,House $house)
     {
-        $house= House::with(['imeges','comments','user'])->where('id',$request->house_id)->where('user_id',Auth::user()->id)->first();
-        if($house){
-            $file=$request->file('src');
-            $extension=$file->getClientOriginalExtension();
-            $filename=time().'.'.$extension;
-            $file->move('uploads/houses/',$filename);
+        $file=$request->file('src');
+        $extension=$file->getClientOriginalExtension();
+        $filename=time().'.'.$extension;
+        $file->move('uploads/houses/',$filename);
 
-            $imge =Imge::with('house')->create([
-                'src'=>$filename,
-                'house_id'=>$request->house_id,
-                'user_id'=>Auth::user()->id,
-            ]);
-            return $baseservice->sendResponse(new ImgeResource($imge),'created successfully');
-        }
-        return $baseservice->sendError('you didnt post this house (id not found)');
+        $imge =Imge::with('house')->create([
+            'src'=>$filename,
+            'house_id'=>$house->id,
+        ]);
+        $response=[
+            'house_id'=>$house->id ,
+            'src'=>$filename ,
+            'image_id'=>$imge->id 
+        ];
+        return $this->createdsussesfully($response);
     }
 
     /**
@@ -45,19 +42,14 @@ class ImgeController extends Controller
      * @param  \App\Models\Imge  $imge
      * @return \Illuminate\Http\Response
      */
-    public function destroy(DeleteImageRequest $request,$id,BaseService $baseservice)
+    public function destroy(Imge $img)
     {
-        $imge =Imge::with('house')->where('user_id',Auth::user()->id)->find($id);
-        if($imge){
-            $house= House::withcount('imeges')->where('id',$request->house_id)
-            ->where('user_id',Auth::user()->id)->first();
-            if($house['imeges_count']>1){
-
-                $imge->delete();
-                return $baseservice->sendResponse(new ImgeResource($imge),' imge deleted successfully');
-            }
-            return $baseservice->sendError('the house cant have no images');
+        $house= House::withcount('imeges')->where('id',$img->house_id)
+        ->first();
+        if($house['imeges_count']>1){
+            $img->delete();
+            return $this->deleted(new ImgeResource($img));
         }
-        return $baseservice->sendError('you didnt post this image (id not found)');
+        return $this->undeleted('the house cant have no images');
     }
 }

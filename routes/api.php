@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\HousesController;
+use App\Http\Controllers\API\HousestestController;
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikesAndDislikesController;
@@ -18,61 +18,65 @@ use App\Http\Controllers\ImgeController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-// ++++++++++++++++++++++++++++++++++++start public api+++++++++++++++++++++++++++++++++++
+// ++++++++++++++++++++++++++++start user info api+++++++++++++++++++++++++++++++++++
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+// ++++++++++++++++++++++++++++end user info api+++++++++++++++++++++++++++++++++++
 
-Route::get('/register',      [RegisterController::class,'register']);
-Route::get('/login',         [RegisterController::class,'login']);
+// ++++++++++++++++++++++++++++start public api+++++++++++++++++++++++++++++++++++
 
-Route::get('/index',         [HousesController::class,'index']);
-Route::get('/search/{title}',[HousesController::class,'search']); 
-Route::get('/show/{id}',     [HousesController::class,'show']);
+Route::post('/register',  [RegisterController::class,'register']);
+Route::post('/login',      [RegisterController::class,'login']);
 
-// ++++++++++++++++++++++++++++++++++++end public api+++++++++++++++++++++++++++++++++++
+Route::get('public/index',             [HousestestController::class,'index']);
+Route::get('public/show/{house}',      [HousestestController::class,'show'])
+->missing(function(){return response()->json('there is no such id !',404);});
+Route::get('public/search/{title}',    [HousestestController::class,'search']); 
+// +++++++++++++++++++++++++++++end public api+++++++++++++++++++++++++++++++++++
 
-
-
-// ++++++++++++++++++++++++++++++++++++start houses api+++++++++++++++++++++++++++++++++++
-// Route::resource('user', 'UserController');
+// +++++++++++++++++++++++++++++start houses api+++++++++++++++++++++++++++++++++++
 Route::group(['middleware' => 'auth:sanctum'], function() {
-    Route::post('/store',         [HousesController::class,'store']);
-    Route::put('/update/{id}',    [HousesController::class,'update']); 
-    Route::delete('/destroy/{id}',[HousesController::class,'destroy']); 
-    Route::get('/logout',         [RegisterController::class,'logout']);
+    Route::get('/search/{title}',    [HousestestController::class,'search']); 
+    Route::get('/index',             [HousestestController::class,'index']);
+    Route::get('/show/{house}',      [HousestestController::class,'show'])
+    ->missing(function(){return response()->json('there is no such id !',404);});
+    Route::post('/store',            [HousestestController::class,'store']);
+    Route::put('/update/{house}',    [HousestestController::class,'update'])
+    ->missing(function(){return response()->json('there is no such id !',404);}); 
+    Route::delete('/destroy/{house}',[HousestestController::class,'destroy'])
+    ->missing(function(){return response()->json('there is no such id !',404);});
+    Route::get('/logout',            [RegisterController::class,'logout']);
 });
-// ++++++++++++++++++++++++++++++++++++end houses api+++++++++++++++++++++++++++++++++++
+// +++++++++++++++++++++++++++end houses api+++++++++++++++++++++++++++++++++++
 
-
-
-
-// ++++++++++++++++++++++++++++++++++++start comments api+++++++++++++++++++++++++++++++++++
-
+// +++++++++++++++++++++++++++start comments api+++++++++++++++++++++++++++++++++++
 Route::prefix('comment')->name('comment.')->middleware('auth:sanctum')->group(function(){
-    // Route::get('/index',          [CommentController::class,'index']);
-    // Route::get('/show/{id}',      [CommentController::class,'show']);
-    Route::post('/store',         [CommentController::class,'store']);
-    Route::put('/update/{id}',    [CommentController::class,'update']); 
-    Route::delete('/destroy/{id}',[CommentController::class,'destroy']); 
+    Route::post('/store',              [CommentController::class,'store']);
+    Route::put('/update/{comment}',    [CommentController::class,'update'])
+    ->missing(function(){return response()->json('there is no such id !',404);});; 
+    Route::delete('/destroy/{comment}',[CommentController::class,'destroy'])
+    ->missing(function(){return response()->json('there is no such id !',404);});; 
 });
-// ++++++++++++++++++++++++++++++++++++end comments api+++++++++++++++++++++++++++++++++++
+// +++++++++++++++++++++++++++++end comments api+++++++++++++++++++++++++++++++++++
 
-// ++++++++++++++++++++++++++++++++++++start likes api+++++++++++++++++++++++++++++++++++
 
+// +++++++++++++++++++++++++++++start likes api+++++++++++++++++++++++++++++++++++
 Route::prefix('like')->name('like.')->middleware('auth:sanctum')->group(function(){
-    Route::post('/store',         [LikesAndDislikesController::class,'store']);
+    Route::post('/store',         [LikesAndDislikesController::class,'store'])
+    ->missing(function(){return response()->json('there is no such id !',404);});
     Route::put('/update/{id}',    [LikesAndDislikesController::class,'update']); 
     Route::delete('/destroy/{id}',[LikesAndDislikesController::class,'destroy']); 
 });
-// ++++++++++++++++++++++++++++++++++++end likes api+++++++++++++++++++++++++++++++++++
+// +++++++++++++++++++++++++++++++end likes api+++++++++++++++++++++++++++++++++++
 
+// +++++++++++++++++++++++++++++++start images api+++++++++++++++++++++++++++++++++++
 Route::prefix('image')->name('image.')->middleware('auth:sanctum')->group(function(){
-    // Route::get   ('/index',       [ImgeController::class,'index']);
-    // Route::get   ('/show/{id}',   [ImgeController::class,'show']);
-    Route::post  ('/store',       [ImgeController::class,'store']);
-    // Route::put   ('/update/{id}', [ImgeController::class,'update']); 
-    Route::delete('/destroy/{id}',[ImgeController::class,'destroy']); 
+    Route::post  ('/store/{house}',[ImgeController::class,'store'])
+    ->missing(function(){return response()->json('there is no such id !',404);});
+    Route::delete('/destroy/{img}',[ImgeController::class,'destroy'])
+    ->missing(function(){return response()->json('there is no such id !',404);});   
 });
+// +++++++++++++++++++++++++++++++end images api+++++++++++++++++++++++++++++++++++
+
 

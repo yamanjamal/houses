@@ -16,12 +16,10 @@ class CommntResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'commentid'=>$this->id,
-            'username'=>$this->user->name,
-            'user_id'=>$this->user->id,
-            'content'=>$this->content,
-            // 'house_id'=>$this->house->id,
-            // 'username'=>$username->name,
+            'commentid' =>$this->id,
+            'username'  =>$this->user->name,
+            'user_id'   =>$this->user->id,
+            'content'   =>$this->content,
         ];
     }
 }

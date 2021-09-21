@@ -9,7 +9,6 @@ class LikesAndDislikes extends Model
 {
     use HasFactory;
 
-
     protected $fillable = [
         'likeState',
         'user_id',

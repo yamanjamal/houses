@@ -14,7 +14,8 @@ use App\Services\BaseService;
 
 class RegisterController extends Controller
 {
-    public function register(RegisterRequest $request,BaseService $baseservice){
+    public function register(RegisterRequest $request,BaseService $baseservice)
+    {
         
         $input=$request->validated();
         $input['password']=Hash::make($input['password']);

@@ -2,56 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Comment;
+use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Services\BaseService;
 use App\Http\Resources\CommntResource;
 use App\Http\Requests\CommentStoreRequest;
 use App\Http\Requests\CommentUpdateRequest;
+use App\Models\Comment;
 
-class CommentController extends Controller
+class CommentController extends ApiController
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    // public function index(BaseService $baseservice)
-    // {
-    //     $Comment =Comment::with(['user','house'])->get();
-    //     return $baseservice->sendResponse(CommntResource::collection($Comment) ,'all Comments sent sussesfully');
-    // }
-
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CommentStoreRequest $request,BaseService $baseservice)
+    public function store(CommentStoreRequest $request)
     {
-        // dd(Auth::user()->id);
-        $Comment =Comment::with(['user','house'])->create([
-            'content'=>$request->content,
-            'user_id'=>Auth::user()->id,
-            'house_id'=>$request->house_id,
-        ]);
-        return $baseservice->sendResponse(new CommntResource($Comment),'created successfully');
+      $Comment =Comment::with(['user','house'])->create($request->validated());
+        return $this->createdsussesfully(new CommntResource($Comment));
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\Response
-     */
-    // public function show($id,BaseService $baseservice)
-    // {
-    //     $comment= Comment::with(['user','house'])->find($id);
-    //      return $comment?$baseservice->sendResponse(new CommntResource($comment),'got comment successfully')
-    //     :$baseservice->sendError('comment id not found');
-    // }
 
     /**
      * Update the specified resource in storage.
@@ -60,14 +30,10 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function update(CommentUpdateRequest $request,$id ,BaseService $baseservice)
+    public function update(CommentUpdateRequest $request,Comment $comment)
     {
-        $comment= Comment::with(['user','house'])->where('user_id',Auth::user()->id)->find($id);
-        if($comment){
-            $comment->update($request->validated());
-            return $baseservice->sendResponse(new CommntResource($comment),'updated comment successfully');
-        }
-        return $baseservice->sendError('you didnt write this comment (id not found)');
+        $comment->update($request->validated());
+         return $this->updated(new CommntResource($comment));
     }
 
     /**
@@ -76,13 +42,9 @@ class CommentController extends Controller
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id,BaseService $baseservice)
+    public function destroy(Comment $comment)
     {
-        $comment= Comment::with(['user','house'])->where('user_id',Auth::user()->id)->find($id);
-        if($comment){
-             $comment->delete();
-            return $baseservice->sendResponse(new CommntResource($comment),' comment deleted successfully');
-        }
-        return $baseservice->sendError('you didnt write this comment (id not found)');
+        $comment->delete();
+        return $this->deleted(new CommntResource($comment));
     }
 }
