@@ -51,16 +51,16 @@ class House extends Model
         
     }
 
-    public function getPropertyTypeAttribute($value){
-        // ['house','vella','appartment']
-        if($value=='0'){
-            return 'house';
-        }elseif ($value=='1') {
-            return 'vella';
-        }elseif($value=='2'){
-            return 'appartment';
-        }
-    }
+    // public function getPropertyTypeAttribute($value){
+    //     // ['house','vella','appartment']
+    //     if($value=='0'){
+    //         return 'house';
+    //     }elseif ($value=='1') {
+    //         return 'vella';
+    //     }elseif($value=='2'){
+    //         return 'appartment';
+    //     }
+    // }
     public function getapprovedAttribute($value){
         // ['approver','inprogress','declined']
         if($value=='0'){
