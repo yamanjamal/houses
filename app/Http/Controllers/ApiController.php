@@ -18,9 +18,9 @@ class ApiController extends Controller
      *@param   $data
      * @return \Illuminate\Http\Response
      */
-    public function sentsussesfully($data)
+    public function sentsussesfully($data ,$page=0)
     {
-        return $this->baseservice->sendResponse($data,'data sent sussesfully');
+        return $this->baseservice->sendResponse($data,'data sent sussesfully',$page);
     }
     /**
      * Display a listing of the resource.
