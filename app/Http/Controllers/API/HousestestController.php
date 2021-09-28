@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API;
- 
+
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Http\Resources\HouseResource;
@@ -20,8 +20,10 @@ class HousestestController extends ApiController
      */
     public function index()
     {   
-        $houses =House::with('imeges')->where('approved',0)->get();
-         return $houses?$this->sentsussesfully(HouseResource::collection($houses)):
+        $houses = House::with('imeges')->where('approved',0)->paginate(10);
+        $count = House::where('approved',0)->get();
+        $pages = ceil(count($count)/10);
+         return $houses?$this->sentsussesfully(HouseResource::collection($houses),$pages):
           $this->sentunsussesfully();
     }
 
