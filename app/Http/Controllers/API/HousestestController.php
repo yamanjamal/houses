@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\API;
-
+ 
 use App\Http\Controllers\ApiController;
 use Illuminate\Http\Request;
 use App\Http\Resources\HouseResource;
