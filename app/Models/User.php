@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'img',
     ];
 
     /**
@@ -46,6 +47,16 @@ class User extends Authenticatable
     public function houses(){
 
         return $this->hasMany(House::class);
+
+    }
+    public function chatgroups(){
+
+        return $this->hasMany(ChatGroups::class);
+
+    }
+    public function chats(){
+
+        return $this->hasMany(Chat::class);
 
     }
     public function comments(){

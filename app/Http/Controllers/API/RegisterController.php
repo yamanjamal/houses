@@ -16,27 +16,24 @@ class RegisterController extends Controller
 {
     public function register(RegisterRequest $request,BaseService $baseservice)
     {
-        
         $input=$request->validated();
         $input['password']=Hash::make($input['password']);
-        // dd($input['img']);
-
 
         // +++++++++++++++++++img++++++++++++++++++++
-        // if ($input['img']) {
-        //     $photo=$request->img;
-        //     $newphoto=time().$photo->getClientOriginalName();
-
-        //     $photo->move('uploads/houses/',$newphoto);
-        //     $input['img']='uploads/houses/'.$newphoto;
-        // }
+            if($request->hasfile('img')){
+                $file = $request->file('img');
+                $filefirstname = substr($file->getClientOriginalName(),0,-5);
+                $extension = $file->getClientOriginalExtension();
+                $filename = $filefirstname.time().'.'.$extension;
+                $file->move('uploads/Users/',$filename);
+                $input['img']=$filename;
+            }
         // +++++++++++++++++++img++++++++++++++++++++
         
         $user=User::create($input);
         $token['token']=$user->createtoken('fastest,project')->plainTextToken;
         $response=[
             'user'=>$user,
-            // 'token'=>$token,
         ];
         return $baseservice->sendResponse($response,'user regsterd successfully');
     }

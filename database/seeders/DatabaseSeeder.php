@@ -30,6 +30,8 @@ class DatabaseSeeder extends Seeder
             CommentSeeder::class,
             LikesAndDislikesSeeder::class,
             ImgeSeeder::class,
+            ChatGroupsSeeder::class,
+            // ChatSeeder::class,
         ]);
 
     }

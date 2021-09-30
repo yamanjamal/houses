@@ -62,14 +62,14 @@ class House extends Model
     //     }
     // }
     public function getapprovedAttribute($value){
-        // ['approver','inprogress','declined']
-        if($value=='0'){
-            return 'approver';
-        }elseif ($value=='1') {
-            return 'inprogress';
-        }elseif($value=='2'){
-            return 'declined';
-        }
+            // ['approver','inprogress','declined']
+            if($value=='0'){
+                return 'approver';
+            }elseif ($value=='1') {
+                return 'inprogress';
+            }elseif($value=='2'){
+                return 'declined';
+            }
     }
 }
 

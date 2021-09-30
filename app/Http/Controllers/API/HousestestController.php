@@ -20,10 +20,8 @@ class HousestestController extends ApiController
      */
     public function index()
     {   
-        $houses = House::with('imeges')->where('approved',0)->paginate(10);
-        $count = House::where('approved',0)->get();
-        $pages = ceil(count($count)/10);
-         return $houses?$this->sentsussesfully(HouseResource::collection($houses),$pages):
+        $houses = House::with('imeges')->where('approved',0)->get();
+         return $houses?$this->sentsussesfully(HouseResource::collection($houses)):
           $this->sentunsussesfully();
     }
 

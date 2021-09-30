@@ -5,12 +5,11 @@ namespace App\Services;
 
 class BaseService 
 {
-   public function sendResponse($result , $message,$page)
+   public function sendResponse($result , $message)
    {
        $response = [
         'success' => true,
         'data' => $result,
-        'page' => $page ?? '',
         'message' => $message
        ];
        return response()->json($response , 200);
