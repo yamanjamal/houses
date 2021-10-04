@@ -15,6 +15,7 @@ class Chat extends Model
         'message',
     ];
 
+    protected $visible = ['id','user_id','message','created_at'];
 
     public function user(){
 

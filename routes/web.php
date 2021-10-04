@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ucontroller;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,3 +32,4 @@ Route::prefix('admin')->name('admin.')->group(function(){
         Route::post('/logout', [AdminController::class, 'logout'])->name('logout');
     });
 });
+

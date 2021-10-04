@@ -25,11 +25,11 @@ class ChatGroupsFactory extends Factory
             // 'src'=>$this->faker->Image,
             // 'name'=>$this->faker->name,
             // 'user_id'=>rand(1,10),
-            'src'=>'blabla.jpg',
-            'name'=>'yamanchat',
+            'src'=>'img.jpg',
+            'name'=>'yaman and mayar chat',
             'user_id'=>1,
             'owner_id'=>2,
-            'house_id'=>3,
+            'house_id'=>1,
         ];
     }
 }

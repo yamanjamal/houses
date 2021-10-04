@@ -16,14 +16,19 @@ class ChatSeeder extends Seeder
     {
        // Chat::factory(10)->create();
        Chat::create([
-            'chat_groups_id'=>'2',
-            'user_id'=>11,
+            'chat_groups_id'=>'1',
+            'user_id'=>1,
             'message'=>'sup bro',
        ]);       
        Chat::create([
-            'chat_groups_id'=>'2',
-            'user_id'=>9,
-            'message'=>'hey man whats up',
+            'chat_groups_id'=>'1',
+            'user_id'=>2,
+            'message'=>'hey man im fine whats up with u',
        ]);
+       Chat::create([
+            'chat_groups_id'=>'1',
+            'user_id'=>1,
+            'message'=>'im fine',
+       ]); 
     }
 }

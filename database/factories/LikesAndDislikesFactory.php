@@ -23,9 +23,8 @@ class LikesAndDislikesFactory extends Factory
     {
         return [
             'likeState'  =>rand(1,0),
-            'user_id' => rand(1,10),
-            'house_id'=>rand(1,10),
-            
+            'user_id' => rand(3,10),
+            'house_id'=>rand(1,10), 
         ];
     }
 }

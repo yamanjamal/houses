@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\ApiController;
 use App\Http\Requests\ChatGroupsRequest;
 use App\Http\Requests\ChatGroupsUpdateRequest;
+use App\Http\Resources\ChatGroupsResource;
+use App\Http\Resources\ChatGroupsShowResource;
 
 class ChatGroupsController extends ApiController
 {
@@ -19,8 +21,8 @@ class ChatGroupsController extends ApiController
      */
     public function index()
     {
-        $chats= ChatGroups::select('id','name','src','user_id','created_at')->where('user_id',Auth::id())->orwhere('owner_id',Auth::id())->latest()->get();
-       return $chats?$this->sentsussesfully($chats):$this->sentunsussesfully();
+        $chats= ChatGroups::with('chats')->select('id','name','src','user_id','created_at')->where('user_id',Auth::id())->orwhere('owner_id',Auth::id())->latest()->get();
+       return $chats?$this->sentsussesfully(ChatGroupsResource::collection($chats)):$this->sentunsussesfully();
     }
 
     /**
@@ -47,7 +49,7 @@ class ChatGroupsController extends ApiController
             'house_id'=>$request->house_id,
             'user_id'=>Auth::id(),
         ]);
-        return $this->createdsussesfully($ChatGroups);
+        return $this->createdsussesfully(new ChatGroupsResource($ChatGroups));
     }
 
     /**
@@ -59,7 +61,8 @@ class ChatGroupsController extends ApiController
     public function show(ChatGroups $chatGroups)
     {
         if ($chatGroups->user_id == Auth::id() || $chatGroups->owner_id ==Auth::id()) {
-           return $this->sentsussesfully($chatGroups->loadmissing('chats'));
+            $chatGroups->Chats()->update(['read_at'=>1]);
+            return $this->sentsussesfully(new ChatGroupsShowResource($chatGroups->loadmissing('chats')));
        }
         return $this->sentunsussesfully('you cant show chat you didnt make');
     }

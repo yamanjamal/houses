@@ -10,7 +10,6 @@ class ChatGroups extends Model
 {
     use HasFactory;
 
-
      protected $fillable = [
         'src',
         'name',
@@ -18,7 +17,6 @@ class ChatGroups extends Model
         'house_id',
         'owner_id',
     ];
-
 
 
     public function chats(){

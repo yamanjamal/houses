@@ -19,19 +19,16 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        // House::factory(10)->create();
-        // Imge::factory(10)->create();
-        // Comment::factory(10)->create();
 
-        \App\Models\User::factory(10)->create();
         $this->call([
+            UserSeeder::class,
             AdminSeeder::class,
             HouseSeeder::class,
             CommentSeeder::class,
             LikesAndDislikesSeeder::class,
             ImgeSeeder::class,
             ChatGroupsSeeder::class,
-            // ChatSeeder::class,
+            ChatSeeder::class,
         ]);
 
     }
