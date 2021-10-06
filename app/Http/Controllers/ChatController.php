@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ChatRequest;
 use App\Http\Requests\ChatUpdateRequest;
 use App\Http\Controllers\ApiController;
+use App\Events\Message;
 
 class ChatController extends ApiController
 {
@@ -28,6 +29,11 @@ class ChatController extends ApiController
                 'message'=>$request->message,
                 'chat_groups_id'=>$request->chat_groups_id,
             ]);
+
+            $chat->Chats()->update(['read_at'=>1]);
+
+            // event(new Message(Auth::user()->name,$Chat));
+            Broadcast(new Message($Chat))->toOthers();
             return $Chat?$this->createdsussesfully($Chat):createunsussesful();
         }
         return $this->sentunsussesfully('you cant send to chat you didnt make');

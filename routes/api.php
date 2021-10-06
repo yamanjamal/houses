@@ -21,11 +21,7 @@ use App\Http\Controllers\ChatGroupsController;
 |
 */
 
-
-
 // +++++++++++++++++++++++++++++++start chatroom api+++++++++++++++++++++++++++++++++++
-// Route::group(['middleware' => 'auth:sanctum'], function() {
-    // Route::get('/search/{title}',    [ChatController::class,'search']); 
 Route::group(['prefix' => 'chat','middleware' => 'auth:sanctum'], function() {
     Route::get('/index',             [ChatGroupsController::class,'index']);
     Route::get('/show/{chatGroups}',      [ChatGroupsController::class,'show'])
@@ -36,13 +32,10 @@ Route::group(['prefix' => 'chat','middleware' => 'auth:sanctum'], function() {
     Route::delete('/destroy/{chatGroups}',[ChatGroupsController::class,'destroy'])
     ->missing(function(){return response()->json('there is no such id !',404);});
 });
-// });
 // +++++++++++++++++++++++++++++++end chatromm api+++++++++++++++++++++++++++++++++++
 
 
 // +++++++++++++++++++++++++++++++start message api+++++++++++++++++++++++++++++++++++
-// Route::group(['middleware' => 'auth:sanctum'], function() {
-    // Route::get('/search/{title}',    [ChatController::class,'search']); 
 Route::group(['prefix' => 'message','middleware' => 'auth:sanctum'], function() {
     Route::post('/store',            [ChatController::class,'store']);
     Route::put('/update/{chat}',    [ChatController::class,'update'])
@@ -50,11 +43,7 @@ Route::group(['prefix' => 'message','middleware' => 'auth:sanctum'], function() 
     Route::delete('/destroy/{chat}',[ChatController::class,'destroy'])
     ->missing(function(){return response()->json('there is no such id !',404);});
 });
-// });
 // +++++++++++++++++++++++++++++++end message api+++++++++++++++++++++++++++++++++++
-
-
-
 
 
 
@@ -63,6 +52,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 // ++++++++++++++++++++++++++++end user info api+++++++++++++++++++++++++++++++++++
+
+
 
 // ++++++++++++++++++++++++++++start public api+++++++++++++++++++++++++++++++++++
 
