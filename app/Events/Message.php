@@ -38,8 +38,8 @@ class Message implements ShouldBroadcast
         return new PrivateChannel('chat.'.$this->chat->chat_groups_id);
     }
 
-    // public function broadcastAs()
-    // {
-    //     return 'message';
-    // }
+    public function broadcastAs()
+    {
+        return 'message';
+    }
 }

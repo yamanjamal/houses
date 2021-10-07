@@ -30,10 +30,11 @@ class ChatController extends ApiController
                 'chat_groups_id'=>$request->chat_groups_id,
             ]);
 
-            $chat->Chats()->update(['read_at'=>1]);
+            // $chat->Chats()->update(['read_at'=>1]);
 
             // event(new Message(Auth::user()->name,$Chat));
-            Broadcast(new Message($Chat))->toOthers();
+            event(new Message($Chat));   
+            // Broadcast(new Message($Chat))->toOthers();
             return $Chat?$this->createdsussesfully($Chat):createunsussesful();
         }
         return $this->sentunsussesfully('you cant send to chat you didnt make');
