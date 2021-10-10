@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\ApiController;
+use App\Http\Requests\ChatRequest;
+use App\Http\Requests\ChatUpdateRequest;
 use App\Models\Chat;
 use App\Models\ChatGroups;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Requests\ChatRequest;
-use App\Http\Requests\ChatUpdateRequest;
-use App\Http\Controllers\ApiController;
 use App\Events\Message;
 
 class ChatController extends ApiController
 {
-
     /**
      * Store a newly created resource in storage.
      *
@@ -33,8 +32,8 @@ class ChatController extends ApiController
             // $chat->Chats()->update(['read_at'=>1]);
 
             // event(new Message(Auth::user()->name,$Chat));
-            event(new Message($Chat));   
-            // Broadcast(new Message($Chat))->toOthers();
+            // event(new Message($Chat));   
+            Broadcast(new Message($Chat))->toOthers();
             return $Chat?$this->createdsussesfully($Chat):createunsussesful();
         }
         return $this->sentunsussesfully('you cant send to chat you didnt make');
