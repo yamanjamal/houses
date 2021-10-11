@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
-use App\Models\ChatGroups;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +18,7 @@ use App\Models\ChatGroups;
 // });
 
 Broadcast::channel('chat.{chatgroupId}', function ($user, $chatgroupId) {
-    return ['id'=>$user->id, 'name'=>$user->name];
+    if (Auth::check()) {
+        return ['id'=>$user->id, 'name'=>$user->name];
+    }
 });
