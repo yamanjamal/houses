@@ -13,9 +13,10 @@ class Chat extends Model
         'chat_groups_id',
         'user_id',
         'message',
+        'read_at',
     ];
 
-    protected $visible = ['id','user_id','message','created_at'];
+    protected $visible = ['id','user_id','message','created_at','read_at'];
 
     public function user(){
 
